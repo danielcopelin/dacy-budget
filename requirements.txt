@@ -1,0 +1,11 @@
+Flask==1.0.2
+Werkzeug==0.14.1
+python-dotenv==0.10.3
+flask_bootstrap==3.3.7.1
+flask_login==0.4.1
+flask_mail==0.9.1
+flask_migrate==2.5.2
+flask_sqlalchemy==2.4.0
+flask_wtf==0.14.2
+PyJWT==1.7.1
+WTForms==2.2.1
