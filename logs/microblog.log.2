@@ -1,0 +1,90 @@
+2019-06-25 20:04:40,308 ERROR: Exception on /auth/login [GET] [in c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py:1761]
+Traceback (most recent call last):
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\auth\routes.py", line 27, in login
+    return render_template('auth/login.html', title='Sign In', form=form)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\templating.py", line 135, in render_template
+    context, ctx.app)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\templating.py", line 117, in _render
+    rv = template.render(context)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\templates\auth\login.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block "doc"
+    {%- block html %}
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block "html"
+    {% block body -%}
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 21, in block "body"
+    {% block navbar %}
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\templates\base.html", line 21, in block "navbar"
+    <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+jinja2.exceptions.UndefinedError: '_' is undefined
+2019-06-25 20:05:13,186 INFO: Microblog startup [in C:\Users\danie\Documents\Code\dacy-budget\app\__init__.py:73]
+2019-06-25 20:05:15,743 ERROR: Exception on /auth/login [GET] [in c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py:1761]
+Traceback (most recent call last):
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\_compat.py", line 35, in reraise
+    raise value
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\auth\routes.py", line 27, in login
+    return render_template('auth/login.html', title='Sign In', form=form)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\templating.py", line 135, in render_template
+    context, ctx.app)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask\templating.py", line 117, in _render
+    rv = template.render(context)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\templates\auth\login.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block "doc"
+    {%- block html %}
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block "html"
+    {% block body -%}
+  File "c:\users\danie\documents\code\dacy-budget\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block "body"
+    {% block content -%}
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\templates\base.html", line 38, in block "content"
+    {% block app_content %}{% endblock %}
+  File "C:\Users\danie\Documents\Code\dacy-budget\app\templates\auth\login.html", line 5, in block "app_content"
+    <h1>{{ _('Sign In') }}</h1>
+jinja2.exceptions.UndefinedError: '_' is undefined
+2019-06-25 20:07:44,270 INFO: Microblog startup [in C:\Users\danie\Documents\Code\dacy-budget\app\__init__.py:73]
