@@ -2,5 +2,6 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>{{ 'Hi, ' }}{{ current_user.username }}{{ '!' }}</h1>
+<h1>{{ 'Hi, ' }}{{ current_user.username }}{{ '!' }}</h1>
+<a href="/dashboard">Dashboard</a>
 {% endblock %}
