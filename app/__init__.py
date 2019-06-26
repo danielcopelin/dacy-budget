@@ -10,6 +10,7 @@ from flask_login import LoginManager, login_required
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from config import Config
+from dashapp import dashapp
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -24,7 +25,7 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    register_dashapps(app)
+    # register_dashapps(app)
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -43,6 +44,10 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
 
     app.register_blueprint(main_bp)
+
+    from app.dashboard import bp as dashboard_dp
+
+    app.register_blueprint(dashboard_dp)
 
     if not app.debug and not app.testing:
         if app.config["MAIL_SERVER"]:
@@ -85,41 +90,9 @@ def create_app(config_class=Config):
         app.logger.setLevel(logging.INFO)
         app.logger.info("Dacy Budget startup")
 
+    app = dashapp.add_dash(app)
+
     return app
-
-
-def register_dashapps(app):
-    from app.dashapp1.layout import layout
-    from app.dashapp1.callbacks import register_callbacks
-
-    # Meta tags for viewport responsiveness
-    meta_viewport = {
-        "name": "viewport",
-        "content": "width=device-width, initial-scale=1, shrink-to-fit=no",
-    }
-    external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
-    dashapp1 = dash.Dash(
-        __name__,
-        server=app,
-        url_base_pathname="/dashboard/",
-        assets_folder=get_root_path(__name__) + "/dashboard/assets/",
-        meta_tags=[meta_viewport],
-        external_stylesheets=external_stylesheets,
-    )
-
-    dashapp1.title = "Dashapp 1"
-    dashapp1.layout = layout
-    dashapp1.url_base_pathname = "/dashboard/"  # I dont know why I had to do this
-    register_callbacks(dashapp1)
-    _protect_dashviews(dashapp1)
-
-
-def _protect_dashviews(dashapp):
-    for view_func in dashapp.server.view_functions:
-        if view_func.startswith(dashapp.url_base_pathname):
-            dashapp.server.view_functions[view_func] = login_required(
-                dashapp.server.view_functions[view_func]
-            )
 
 
 from app import models
