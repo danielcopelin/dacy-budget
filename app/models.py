@@ -20,7 +20,7 @@ class User(UserMixin, db.Model):
     token_expiration = db.Column(db.DateTime)
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return "<User {}>".format(self.username)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -30,40 +30,39 @@ class User(UserMixin, db.Model):
 
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
-            {'reset_password': self.id, 'exp': time() + expires_in},
-            current_app.config['SECRET_KEY'],
-            algorithm='HS256').decode('utf-8')
+            {"reset_password": self.id, "exp": time() + expires_in},
+            current_app.config["SECRET_KEY"],
+            algorithm="HS256",
+        ).decode("utf-8")
 
     @staticmethod
     def verify_reset_password_token(token):
         try:
-            id = jwt.decode(token, current_app.config['SECRET_KEY'],
-                            algorithms=['HS256'])['reset_password']
+            id = jwt.decode(
+                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
+            )["reset_password"]
         except:
             return
         return User.query.get(id)
 
     def to_dict(self, include_email=False):
-        data = {
-            'id': self.id,
-            'username': self.username,
-        }
+        data = {"id": self.id, "username": self.username}
         if include_email:
-            data['email'] = self.email
+            data["email"] = self.email
         return data
 
     def from_dict(self, data, new_user=False):
-        for field in ['username', 'email']:
+        for field in ["username", "email"]:
             if field in data:
                 setattr(self, field, data[field])
-        if new_user and 'password' in data:
-            self.set_password(data['password'])
+        if new_user and "password" in data:
+            self.set_password(data["password"])
 
     def get_token(self, expires_in=3600):
         now = datetime.utcnow()
         if self.token and self.token_expiration > now + timedelta(seconds=60):
             return self.token
-        self.token = base64.b64encode(os.urandom(24)).decode('utf-8')
+        self.token = base64.b64encode(os.urandom(24)).decode("utf-8")
         self.token_expiration = now + timedelta(seconds=expires_in)
         db.session.add(self)
         return self.token
@@ -77,6 +76,24 @@ class User(UserMixin, db.Model):
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
+
+
+class Transaction(db.Model):
+    id = db.Column(db.String(32), primary_key=True)
+    account = db.Column(db.String(80), unique=False, nullable=False)
+    date = db.Column(db.DateTime, unique=False, nullable=False)
+    narration = db.Column(db.String(120), unique=False, nullable=False)
+    debit = db.Column(db.Float, unique=False)
+    credit = db.Column(db.Float, unique=False)
+    balance = db.Column(db.Float, unique=False)
+    added_date = db.Column(
+        db.DateTime, unique=False, nullable=False, default=datetime.utcnow
+    )
+    category = db.Column(db.String(80), nullable=True)
+    sub_category = db.Column(db.String(80), nullable=True)
+
+    def __repr__(self):
+        return "<Transaction %r>" % self.id
 
 
 @login.user_loader

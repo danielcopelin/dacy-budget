@@ -1,7 +1,7 @@
 from . import bp
 from flask import render_template
 from flask_login import login_required
-from dashapp import dashapp
+import dashapp
 
 
 @bp.route("/app1")

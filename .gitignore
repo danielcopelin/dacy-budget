@@ -38,5 +38,5 @@ nosetests.xml
 .pydevproject
 
 venv
-app.db
+*.db
 dacybudget.log*

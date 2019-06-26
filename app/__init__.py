@@ -10,7 +10,7 @@ from flask_login import LoginManager, login_required
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from config import Config
-from dashapp import dashapp
+import dashapp
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -25,13 +25,13 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # register_dashapps(app)
-
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
     mail.init_app(app)
     bootstrap.init_app(app)
+
+    app = dashapp.add_dash(app)
 
     from app.errors import bp as errors_bp
 
@@ -89,8 +89,6 @@ def create_app(config_class=Config):
 
         app.logger.setLevel(logging.INFO)
         app.logger.info("Dacy Budget startup")
-
-    app = dashapp.add_dash(app)
 
     return app
 
