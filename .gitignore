@@ -1,4 +1,5 @@
 .env
+chromedriver.exe
 
 *.py[cod]
 
