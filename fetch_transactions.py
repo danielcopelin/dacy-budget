@@ -49,7 +49,7 @@ def download_wait(directory, timeout, nfiles=None):
     return seconds
 
 
-def download_transactions():
+def download_transactions(date_range="Last 7 Days"):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     download_dir = "_downloads"
     download_path = os.path.join(base_dir, download_dir)
@@ -102,12 +102,11 @@ def download_transactions():
     elem.click()
 
     s1 = Select(driver.find_element_by_id("_ctl0_ContentMain_ddlRangeOptions"))
-    s1.select_by_visible_text("Last 7 Days")
+    s1.select_by_visible_text(date_range)
 
     driver.execute_script(
         'javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions("_ctl0:ContentButtonsLeft:btnExport", "", true, "", "", false, true))'
     )
-    driver.save_screenshot("./download.png")
     download_wait(download_path, 20, nfiles=1)
     driver.close()
 
