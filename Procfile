@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn dacybuget:app
+web: flask db upgrade; gunicorn dacybudget:app

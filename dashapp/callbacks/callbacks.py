@@ -64,7 +64,7 @@ def register_callbacks(app):
         return conditional_dict, sub_conditional_list
 
     conditional_dict, sub_conditional_list = gen_conditionals_from_csv(
-        "dashapp\\static\\categories.csv", "category", "sub_category"
+        "..\\static\\categories.csv", "category", "sub_category"
     )
 
     @app.callback(
