@@ -37,12 +37,106 @@ def register_callbacks(app):
         else:
             db.session.commit()
 
-    def gen_conditionals_from_csv(src, category_column, sub_category_column):
-        categories = {}
-        with open(src) as csvfile:
-            reader = csv.reader(csvfile)
-            for row in reader:
-                categories[row[0]] = [c for c in row[1:] if c != ""]
+    def gen_conditionals_categories(category_column, sub_category_column):
+        categories = {
+            "Income": [
+                "Salary",
+                "Bonuses",
+                "Gifts",
+                "Dividends",
+                "Savings",
+                "Tax Return",
+            ],
+            "Insurance": [
+                "Health Insurance",
+                "Bike Insurance",
+                "Car Insurance",
+                "Pet Insurance",
+                "Home Insurance",
+                "Mortgage Insurance",
+                "Life Insurance",
+            ],
+            "Housing": [
+                "Mortgage",
+                "Rent",
+                "Accountant Fee",
+                "Security",
+                "Home maintenance",
+            ],
+            "Children": [
+                "Childcare",
+                "School Fees",
+                "School activities",
+                "Toys",
+                "Allowance",
+                "School supplies",
+                "Babysitter",
+                "Daycare",
+            ],
+            "Entertainment": [
+                "Events",
+                "Movies",
+                "Charity Rides",
+                "Experiences",
+                "Games",
+            ],
+            "Health Beauty": [
+                "Health Fitness",
+                "Hairdresser",
+                "Optical",
+                "Medical",
+                "Medication",
+                "Dental",
+            ],
+            "Utilities": [
+                "Gas Bill",
+                "Water Bill",
+                "Rates",
+                "Electricity",
+                "Phone Bill",
+            ],
+            "Memberships": [
+                "Music subscription",
+                "Internet",
+                "Strava",
+                "Google storage",
+                "Media subscription",
+            ],
+            "Travel": ["Accommodation", "Flights", "Airbnb"],
+            "Food": [
+                "Cafe Coffee",
+                "Resturants",
+                "Takeaway",
+                "Bars Pubs",
+                "Groceries",
+                "Alcohol",
+            ],
+            "Shopping": [
+                "Bike Stuff",
+                "Clothing Footwear",
+                "Beauty",
+                "Books",
+                "Electronics Software",
+                "Home supplies",
+                "Birthday gifts",
+                "Christmas gifts",
+                "Wedding gifts",
+                "Anniversary",
+                "Other shopping",
+            ],
+            "Transportation": [
+                "Uber Taxi",
+                "Car Loan",
+                "Car maintenance",
+                "Car registration",
+                "Bike maintenance",
+                "Public transport",
+                "Roadside assistance",
+                "Parking",
+            ],
+            "Pets": ["Vet", "Emergency", "Pet supplies", "Pet sitter", "Pet food"],
+            "Miscellaneous": ["Charity Donations", "Hecs", "Fines"],
+        }
 
         conditional_dict = {
             category_column: {
@@ -63,8 +157,8 @@ def register_callbacks(app):
 
         return conditional_dict, sub_conditional_list
 
-    conditional_dict, sub_conditional_list = gen_conditionals_from_csv(
-        "..\\static\\categories.csv", "category", "sub_category"
+    conditional_dict, sub_conditional_list = gen_conditionals_from_categories(
+        "category", "sub_category"
     )
 
     @app.callback(
@@ -89,29 +183,18 @@ def register_callbacks(app):
                 columns=[
                     {"id": "id", "name": "Hash", "type": "text", "hidden": True},
                     {"id": "date", "name": "Date", "type": "text"},
+                    {"id": "account", "name": "Account", "type": "text"},
                     {"id": "narration", "name": "Narration", "type": "text"},
                     {
-                        "id": "debit",
-                        "name": "Debit",
+                        "id": "amount",
+                        "name": "Amount",
                         "type": "numeric",
                         "format": FormatTemplate.money(2),
                     },
-                    {
-                        "id": "credit",
-                        "name": "Credit",
-                        "type": "numeric",
-                        "format": FormatTemplate.money(2),
-                    },
-                    {
-                        "id": "category",
-                        "name": "Category",
-                        # "type": "text",
-                        "presentation": "dropdown",
-                    },
+                    {"id": "category", "name": "Category", "presentation": "dropdown"},
                     {
                         "id": "sub_category",
                         "name": "Sub-category",
-                        # "type": "text",
                         "presentation": "dropdown",
                     },
                 ],

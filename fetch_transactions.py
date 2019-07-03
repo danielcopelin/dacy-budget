@@ -51,7 +51,7 @@ def download_wait(directory, timeout, nfiles=None):
 
 def download_transactions(date_range="Last 7 Days"):
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    download_dir = "_downloads"
+    download_dir = "..\\_downloads"
     download_path = os.path.join(base_dir, download_dir)
 
     for f in os.listdir(download_path):
