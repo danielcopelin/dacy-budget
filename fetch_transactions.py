@@ -182,6 +182,10 @@ if __name__ == "__main__":
     app.config.from_object(Config)
     db = SQLAlchemy(app)
 
+    user = os.getenv("PAN")
+    pwd = os.getenv("SECURE_CODE")
+    print(f"{user} {pwd}")
+
     if len(sys.argv) == 2:
         date_range = sys.argv[1]
         submit_transactions(download_transactions(date_range=date_range))
