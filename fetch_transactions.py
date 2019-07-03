@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -92,18 +95,33 @@ def download_transactions(date_range="Last 7 Days"):
 
     driver.get("https://ibs.bankwest.com.au/BWLogin/bib.aspx")
 
-    elem = driver.find_element_by_id("AuthUC_txtUserID")
+    # elem = driver.find_element_by_id("AuthUC_txtUserID")
+    elem = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.ID, "AuthUC_txtUserID"))
+    )
     elem.send_keys(user)
-    elem = driver.find_element_by_id("AuthUC_txtData")
+    # elem = driver.find_element_by_id("AuthUC_txtData")
+    elem = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.ID, "AuthUC_txtData"))
+    )
     elem.send_keys(pwd)
 
-    elem = driver.find_element_by_id("AuthUC_btnLogin")
+    # elem = driver.find_element_by_id("AuthUC_btnLogin")
+    elem = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.ID, "AuthUC_btnLogin"))
+    )
     elem.click()
 
-    elem = driver.find_element_by_link_text("Transaction search")
+    # elem = driver.find_element_by_link_text("Transaction search")
+    elem = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.LINK_TEXT, "Transaction search"))
+    )
     elem.click()
 
-    s1 = Select(driver.find_element_by_id("_ctl0_ContentMain_ddlRangeOptions"))
+    elem = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.ID, "_ctl0_ContentMain_ddlRangeOptions"))
+    )
+    s1 = Select(elem)
     s1.select_by_visible_text(date_range)
 
     driver.execute_script(
