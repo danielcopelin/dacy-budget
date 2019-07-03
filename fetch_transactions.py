@@ -7,12 +7,12 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select, WebDriverWait
 from sqlalchemy.exc import IntegrityError
 
 from app.models import Transaction
@@ -113,9 +113,12 @@ def download_transactions(date_range="Last 7 Days"):
     elem.click()
 
     # elem = driver.find_element_by_link_text("Transaction search")
-    elem = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.LINK_TEXT, "Transaction search"))
-    )
+    try:
+        elem = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.LINK_TEXT, "Transaction search"))
+        )
+    except TimeoutException as e:
+        print(driver.page_source)
     elem.click()
 
     elem = WebDriverWait(driver, 20).until(
