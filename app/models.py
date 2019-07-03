@@ -83,8 +83,7 @@ class Transaction(db.Model):
     account = db.Column(db.String(80), unique=False, nullable=False)
     date = db.Column(db.DateTime, unique=False, nullable=False)
     narration = db.Column(db.String(120), unique=False, nullable=False)
-    debit = db.Column(db.Float, unique=False)
-    credit = db.Column(db.Float, unique=False)
+    amount = db.Column(db.Float, unique=False)
     balance = db.Column(db.Float, unique=False)
     added_date = db.Column(
         db.DateTime, unique=False, nullable=False, default=datetime.utcnow

@@ -112,7 +112,12 @@ def download_transactions(date_range="Last 7 Days"):
 
     downloaded_file = os.path.join(download_path, os.listdir(download_path)[0])
     df = pd.read_csv(downloaded_file)
-
+    df["Amount"] = df["Credit"].fillna(0.0) + df["Debit"].fillna(
+        0.0
+    )  # combine credit and debit columns
+    df = df[
+        ~df.Narration.str.contains("AUTHORISATION ONLY")
+    ]  # drop authorisation only entries
     for f in os.listdir(download_path):
         os.remove(os.path.join(download_path, f))
 
@@ -134,8 +139,7 @@ def submit_transactions(df):
                     account=row["Account Number"],
                     date=pd.to_datetime(row["Transaction Date"]),
                     narration=row["Narration"],
-                    debit=row["Debit"],
-                    credit=row["Credit"],
+                    amount=row["Amount"],
                     balance=row["Balance"],
                 )
             )
