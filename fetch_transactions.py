@@ -1,5 +1,6 @@
 import hashlib
 import os
+import sys
 from time import sleep
 
 import pandas as pd
@@ -181,4 +182,8 @@ if __name__ == "__main__":
     app.config.from_object(Config)
     db = SQLAlchemy(app)
 
-    submit_transactions(download_transactions())
+    if len(sys.argv) == 2:
+        date_range = sys.argv[1]
+        submit_transactions(download_transactions(date_range=date_range))
+    else:
+        submit_transactions(download_transactions())
