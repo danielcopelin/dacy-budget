@@ -7,7 +7,6 @@ import dash_table.FormatTemplate as FormatTemplate
 from dash_table.Format import Sign
 from collections import OrderedDict
 from sqlalchemy.exc import IntegrityError
-import csv
 import dashapp.layout
 
 
