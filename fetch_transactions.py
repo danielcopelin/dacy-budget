@@ -97,33 +97,21 @@ def download_transactions(date_range="Last 7 Days"):
 
     driver.get("https://ibs.bankwest.com.au/BWLogin/bib.aspx")
 
-    # elem = driver.find_element_by_id("AuthUC_txtUserID")
     elem = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "AuthUC_txtUserID"))
     )
-    print(f"before: {elem.get_attribute('value')}")
     elem.send_keys(user)
-    print(f"after: {elem.get_attribute('value')}")
-    # assert elem.get_attribute("value") == user
-    # WebDriverWait(driver, 5).until(lambda browser: elem.get_attribute("value") == user)
 
-    # elem = driver.find_element_by_id("AuthUC_txtData")
     elem = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "AuthUC_txtData"))
     )
-    print(f"before: {elem.get_attribute('value')}")
     elem.send_keys(pwd)
-    print(f"after: {elem.get_attribute('value')}")
-    # assert elem.get_attribute("value") == pwd
-    # WebDriverWait(driver, 5).until(lambda browser: elem.get_attribute("value") == pwd)
 
-    # elem = driver.find_element_by_id("AuthUC_btnLogin")
     elem = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "AuthUC_btnLogin"))
     )
     elem.click()
 
-    # elem = driver.find_element_by_link_text("Transaction search")
     try:
         elem = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.LINK_TEXT, "Transaction search"))
@@ -146,7 +134,7 @@ def download_transactions(date_range="Last 7 Days"):
     driver.close()
 
     downloaded_file = os.path.join(download_path, os.listdir(download_path)[0])
-    df = pd.read_csv(downloaded_file, dayfirst=True)
+    df = pd.read_csv(downloaded_file, parse_dates=["Transaction Date"], dayfirst=True)
     df["Amount"] = df["Credit"].fillna(0.0) + df["Debit"].fillna(
         0.0
     )  # combine credit and debit columns
