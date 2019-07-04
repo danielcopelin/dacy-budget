@@ -104,13 +104,17 @@ def download_transactions(date_range="Last 7 Days"):
     print(f"before: {elem.get_attribute('value')}")
     elem.send_keys(user)
     print(f"after: {elem.get_attribute('value')}")
+    # assert elem.get_attribute("value") == user
     WebDriverWait(driver, 5).until(lambda browser: elem.get_attribute("value") == user)
 
     # elem = driver.find_element_by_id("AuthUC_txtData")
     elem = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "AuthUC_txtData"))
     )
+    print(f"before: {elem.get_attribute('value')}")
     elem.send_keys(pwd)
+    print(f"after: {elem.get_attribute('value')}")
+    # assert elem.get_attribute("value") == pwd
     WebDriverWait(driver, 5).until(lambda browser: elem.get_attribute("value") == pwd)
 
     # elem = driver.find_element_by_id("AuthUC_btnLogin")
