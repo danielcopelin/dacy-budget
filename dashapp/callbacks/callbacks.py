@@ -24,7 +24,7 @@ def register_callbacks(app):
         idx = changed.index.get_level_values(0)[0]
         column = changed.index.get_level_values(1)[0]
         id = old.loc[idx, "id"]
-        value = changed[0]
+        value = changed[idx][column]
         try:
             transaction = Transaction.query.get(id)
             setattr(transaction, column, value)
