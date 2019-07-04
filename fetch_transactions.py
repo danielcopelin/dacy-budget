@@ -101,7 +101,9 @@ def download_transactions(date_range="Last 7 Days"):
     elem = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "AuthUC_txtUserID"))
     )
+    print(f"before: {elem.get_attribute('value')}")
     elem.send_keys(user)
+    print(f"after: {elem.get_attribute('value')}")
     WebDriverWait(driver, 5).until(lambda browser: elem.get_attribute("value") == user)
 
     # elem = driver.find_element_by_id("AuthUC_txtData")
