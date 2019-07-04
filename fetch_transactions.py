@@ -76,6 +76,7 @@ def download_transactions(date_range="Last 7 Days"):
     options.add_argument("--headless")
     options.add_argument("--allow-scripts")
     options.add_argument("--no-sandbox")
+    options.add_argument("log-level=1")
 
     WINDOW_SIZE = "1200,900"
     options.add_argument("--window-size=%s" % WINDOW_SIZE)
@@ -101,11 +102,14 @@ def download_transactions(date_range="Last 7 Days"):
         EC.presence_of_element_located((By.ID, "AuthUC_txtUserID"))
     )
     elem.send_keys(user)
+    WebDriverWait(driver, 5).until(lambda browser: elem.get_attribute("value") == user)
+
     # elem = driver.find_element_by_id("AuthUC_txtData")
     elem = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "AuthUC_txtData"))
     )
     elem.send_keys(pwd)
+    WebDriverWait(driver, 5).until(lambda browser: elem.get_attribute("value") == pwd)
 
     # elem = driver.find_element_by_id("AuthUC_btnLogin")
     elem = WebDriverWait(driver, 20).until(
@@ -118,6 +122,7 @@ def download_transactions(date_range="Last 7 Days"):
         elem = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.LINK_TEXT, "Transaction search"))
         )
+        print("Login successful.")
     except TimeoutException as e:
         print(driver.page_source)
     elem.click()
@@ -135,7 +140,7 @@ def download_transactions(date_range="Last 7 Days"):
     driver.close()
 
     downloaded_file = os.path.join(download_path, os.listdir(download_path)[0])
-    df = pd.read_csv(downloaded_file)
+    df = pd.read_csv(downloaded_file, dayfirst=True)
     df["Amount"] = df["Credit"].fillna(0.0) + df["Debit"].fillna(
         0.0
     )  # combine credit and debit columns
@@ -181,10 +186,6 @@ if __name__ == "__main__":
     app = Flask(__name__)
     app.config.from_object(Config)
     db = SQLAlchemy(app)
-
-    user = os.getenv("PAN")
-    pwd = os.getenv("SECURE_CODE")
-    print(f"{user} {pwd}")
 
     if len(sys.argv) == 2:
         date_range = sys.argv[1]

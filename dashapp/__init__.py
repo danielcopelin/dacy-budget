@@ -8,15 +8,15 @@ url_base = "/dash/app1/"
 
 
 def add_dash(server):
-    # meta_viewport = {
-    #     "name": "viewport",
-    #     "content": "width=device-width, initial-scale=1, shrink-to-fit=no",
-    # }
+    meta_viewport = {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1, shrink-to-fit=no",
+    }
     external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
     app = Dash(
         server=server,
         url_base_pathname=url_base,
-        # meta_tags=[meta_viewport],
+        meta_tags=[meta_viewport],
         external_stylesheets=external_stylesheets,
     )
     app.url_base_pathname = url_base

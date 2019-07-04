@@ -25,7 +25,6 @@ def register_callbacks(app):
         column = changed.index.get_level_values(1)[0]
         id = old.loc[idx, "id"]
         value = changed[0]
-
         try:
             transaction = Transaction.query.get(id)
             setattr(transaction, column, value)
@@ -182,7 +181,7 @@ def register_callbacks(app):
                 columns=[
                     {"id": "id", "name": "Hash", "type": "text", "hidden": True},
                     {"id": "date", "name": "Date", "type": "text"},
-                    {"id": "account", "name": "Account", "type": "text"},
+                    # {"id": "account", "name": "Account", "type": "text"},
                     {"id": "narration", "name": "Narration", "type": "text"},
                     {
                         "id": "amount",
@@ -205,7 +204,7 @@ def register_callbacks(app):
                 sort_mode="multi",
                 page_action="native",
                 page_current=page_current,
-                page_size=20,
+                page_size=15,
                 dropdown=conditional_dict,
                 dropdown_conditional=sub_conditional_list,
             )
