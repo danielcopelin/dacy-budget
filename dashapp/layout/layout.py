@@ -144,11 +144,17 @@ def layout(app):
                 [
                     dash_table.DataTable(
                         id="transaction_table",
-                        data=df.to_dict("rows"),
+                        data=df.sort_values("added_date").to_dict("rows"),
                         columns=[
                             {
                                 "id": "id",
                                 "name": "Hash",
+                                "type": "text",
+                                "hidden": True,
+                            },
+                            {
+                                "id": "added_date",
+                                "name": "Added",
                                 "type": "text",
                                 "hidden": True,
                             },
@@ -176,7 +182,7 @@ def layout(app):
                         editable=True,
                         filter_action="native",
                         sort_action="native",
-                        sort_mode="multi",
+                        # sort_mode="multi",
                         page_action="native",
                         page_current=0,
                         page_size=15,

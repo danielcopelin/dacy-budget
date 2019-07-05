@@ -46,5 +46,5 @@ def register_callbacks(app):
             transactions = db.session.query(Transaction)
             df = pd.read_sql(transactions.statement, transactions.session.bind)
 
-        return df.to_dict("rows")
+        return df.sort_values("added_date").to_dict("rows")
 
