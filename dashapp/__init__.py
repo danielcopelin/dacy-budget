@@ -20,7 +20,7 @@ def add_dash(server):
         external_stylesheets=external_stylesheets,
     )
     app.url_base_pathname = url_base
-    apply_layout_with_auth(app, layout)
+    apply_layout_with_auth(app, layout(app))
     register_callbacks(app)
     _protect_dashviews(app)
 
