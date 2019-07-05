@@ -35,16 +35,27 @@ def register_callbacks(app):
 
     @app.callback(
         Output("transaction_table", "data"),
-        [Input("transaction_table", "data_previous")],
+        [
+            Input("transaction_table", "data_previous"),
+            Input("account_selector", "value"),
+        ],
         [State("transaction_table", "data")],
     )
-    def update_database_and_generate_table(old_table_data, table_data):
+    def update_database_and_generate_table(
+        old_table_data, selected_account, table_data
+    ):
         with app.server.app_context():
             if old_table_data is not None:
                 update_changed_data(old_table_data, table_data)
 
-            transactions = db.session.query(Transaction)
+        with app.server.app_context():
+            if selected_account is None:
+                transactions = db.session.query(Transaction)
+            else:
+                transactions = db.session.query(Transaction).filter(
+                    Transaction.account == selected_account
+                )
+
             df = pd.read_sql(transactions.statement, transactions.session.bind)
 
         return df.sort_values("added_date").to_dict("rows")
-

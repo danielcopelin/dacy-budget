@@ -144,14 +144,14 @@ def layout(app):
 
     layout = html.Div(
         [
-            html.Div(id="hidden_div", style={"display": "none"}),
+            # html.Div(id="hidden_div", style={"display": "none"}),
             html.Details(
                 [
                     html.Summary("Filters"),
                     html.Div(
                         dcc.Dropdown(
                             id="account_selector",
-                            options=[{"label": a, "value": a} for a in accounts],
+                            options=[{"label": a[0], "value": a[0]} for a in accounts],
                             placeholder="Select account...",
                         ),
                         style={"width": "100%", "display": "inline-block"},
