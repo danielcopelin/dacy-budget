@@ -149,11 +149,27 @@ def layout(app):
                 [
                     html.Summary("Filters"),
                     html.Div(
-                        dcc.Dropdown(
-                            id="account_selector",
-                            options=[{"label": a[0], "value": a[0]} for a in accounts],
-                            placeholder="Select account...",
-                        ),
+                        [
+                            dcc.Dropdown(
+                                id="account_selector",
+                                options=[
+                                    {"label": a[0], "value": a[0]} for a in accounts
+                                ],
+                                placeholder="Select account...",
+                            ),
+                            dcc.Dropdown(
+                                id="uncategorised_selector",
+                                options=[
+                                    {
+                                        "label": "Uncategorised",
+                                        "value": "uncategorised",
+                                    },
+                                    {"label": "All", "value": "all"},
+                                ],
+                                value="uncategorised",
+                                clearable=False,
+                            ),
+                        ],
                         style={"width": "100%", "display": "inline-block"},
                     ),
                     html.Div(id="selection"),

@@ -38,14 +38,17 @@ def register_callbacks(app):
         [
             Input("transaction_table", "data_previous"),
             Input("account_selector", "value"),
+            Input("uncategorised_selector", "value"),
         ],
         [State("transaction_table", "data")],
     )
     def update_database_and_generate_table(
-        old_table_data, selected_account, table_data
+        old_table_data, selected_account, uncategorised, table_data
     ):
         with app.server.app_context():
-            if old_table_data is not None:
+            if (old_table_data is not None) and (
+                len(old_table_data) == len(table_data)
+            ):
                 update_changed_data(old_table_data, table_data)
 
         with app.server.app_context():
@@ -57,5 +60,8 @@ def register_callbacks(app):
                 )
 
             df = pd.read_sql(transactions.statement, transactions.session.bind)
+
+        if uncategorised == "uncategorised":
+            df = df[pd.isnull(df.sub_category)]
 
         return df.sort_values("added_date").to_dict("rows")
