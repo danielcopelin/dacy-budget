@@ -18,7 +18,9 @@ def layout(app):
                 "Dividends",
                 "Savings",
                 "Tax Return",
+                "Sold Item",
             ],
+            "Credit Card": ["Bill", "Payment"],
             "Insurance": [
                 "Health Insurance",
                 "Bike Insurance",
@@ -107,6 +109,7 @@ def layout(app):
                 "Parking",
             ],
             "Pets": ["Vet", "Emergency", "Pet supplies", "Pet sitter", "Pet food"],
+            "Education": ["Work", "Other"],
             "Miscellaneous": ["Charity Donations", "Hecs", "Fines"],
         }
 
@@ -133,6 +136,8 @@ def layout(app):
         transactions = db.session.query(Transaction)
         df = pd.read_sql(transactions.statement, transactions.session.bind)
 
+        accounts = Transaction.query.with_entities(Transaction.account).distinct()
+
     conditional_dict, sub_conditional_list = gen_conditionals_categories(
         "category", "sub_category"
     )
@@ -140,6 +145,20 @@ def layout(app):
     layout = html.Div(
         [
             html.Div(id="hidden_div", style={"display": "none"}),
+            html.Details(
+                [
+                    html.Summary("Filters"),
+                    html.Div(
+                        dcc.Dropdown(
+                            id="account_selector",
+                            options=[{"label": a, "value": a} for a in accounts],
+                            placeholder="Select account...",
+                        ),
+                        style={"width": "100%", "display": "inline-block"},
+                    ),
+                    html.Div(id="selection"),
+                ]
+            ),
             html.Div(
                 [
                     dash_table.DataTable(
