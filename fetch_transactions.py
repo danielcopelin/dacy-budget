@@ -53,7 +53,7 @@ def download_wait(directory, timeout, nfiles=None):
     return seconds
 
 
-def download_transactions(date_range="Last 7 Days"):
+def download_transactions(date_range="Last 7 Days", from_date=None, to_date=None):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     download_dir = "_downloads"
     download_path = os.path.join(base_dir, download_dir)
@@ -127,6 +127,21 @@ def download_transactions(date_range="Last 7 Days"):
     s1 = Select(elem)
     s1.select_by_visible_text(date_range)
 
+    if date_range == "Custom date range...":
+        elem = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located(
+                (By.ID, "_ctl0_ContentMain_dpFromDate_txtDate")
+            )
+        )
+        elem.send_keys(from_date)
+
+        elem = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located(
+                (By.ID, "_ctl0_ContentMain_dpToDate_txtDate")
+            )
+        )
+        elem.send_keys(to_date)
+
     driver.execute_script(
         'javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions("_ctl0:ContentButtonsLeft:btnExport", "", true, "", "", false, true))'
     )
@@ -184,5 +199,14 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         date_range = sys.argv[1]
         submit_transactions(download_transactions(date_range=date_range))
+    if len(sys.argv) == 4:
+        date_range = sys.argv[1]
+        from_date = sys.argv[2]
+        to_date = sys.argv[3]
+        submit_transactions(
+            download_transactions(
+                date_range=date_range, from_date=from_date, to_date=to_date
+            )
+        )
     else:
         submit_transactions(download_transactions())
