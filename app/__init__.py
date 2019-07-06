@@ -10,7 +10,7 @@ from flask_login import LoginManager, login_required
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from config import Config
-from dashapp import dash_transactions
+from dashapp import dash_transactions, dash_charts
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -32,6 +32,7 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
 
     app = dash_transactions.add_dash(app)
+    app = dash_charts.add_dash(app)
 
     from app.errors import bp as errors_bp
 

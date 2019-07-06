@@ -1,7 +1,7 @@
 from . import bp
 from flask import render_template
 from flask_login import login_required
-from dashapp import dash_transactions
+from dashapp import dash_transactions, dash_charts
 
 
 @bp.route("/transactions")
@@ -13,4 +13,4 @@ def transactions_template():
 @bp.route("/charts")
 @login_required
 def charts_template():
-    return render_template("charts.html", dash_url=dash_transactions.url_base)
+    return render_template("charts.html", dash_url=dash_charts.url_base)
