@@ -1,4 +1,5 @@
 import calendar
+
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
@@ -15,7 +16,11 @@ def layout(app):
 
     df = df[(df.amount < 0) & (df.category != "Credit Card")]
     df_monthly = df.groupby(df.date.dt.month).agg({"amount": "sum"})
-    df_cat = df.groupby(df.category).agg({"amount": "sum"})
+    df_cat = (
+        df.groupby(df.category)
+        .agg({"amount": "sum"})
+        .sort_values("amount", ascending=False)
+    )
 
     layout = html.Div(
         children=[
@@ -34,11 +39,13 @@ def layout(app):
                         },
                         yaxis={"title": "Expenses $"},
                         margin={"t": 10},
-                        # hovermode="closest",
+                        hovermode="closest",
                         barmode="stack",
+                        clickmode="event+select",
                     ),
                 },
             ),
+            html.Div(id="selection"),
             dcc.Graph(
                 id="categories_chart",
                 figure={
