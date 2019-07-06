@@ -23,19 +23,97 @@ def register_callbacks(app):
     @app.callback(
         Output("categories_chart", "figure"), [Input("expenses_chart", "selectedData")]
     )
-    def display_selection(selected_data):
-        if selected_data is None:
+    def displayed_categories_for_month(selected_months):
+        if selected_months is None:
             df_cat = (
                 df.groupby(df.category)
                 .agg({"amount": "sum"})
                 .sort_values("amount", ascending=False)
             )
         else:
-            months = [point["x"] for point in selected_data["points"]]
+            months = [point["x"] for point in selected_months["points"]]
             df_cat = (
                 df[df.date.dt.month.isin(months)]
                 .groupby(df.category)
                 .agg({"amount": "sum"})
                 .sort_values("amount", ascending=False)
             )
+
         return {"data": [go.Bar(x=df_cat.amount * -1, y=df_cat.index, orientation="h")]}
+
+    @app.callback(
+        Output("sub_categories_chart", "figure"),
+        [
+            Input("expenses_chart", "selectedData"),
+            Input("categories_chart", "selectedData"),
+        ],
+    )
+    def displayed_categories_for_month(selected_months, selected_categories):
+        if selected_months is None and selected_categories is None:
+            df_subcat = (
+                df.groupby(df.sub_category)
+                .agg({"amount": "sum"})
+                .sort_values("amount", ascending=False)
+            )
+        elif selected_months is None:
+            categories = [point["y"] for point in selected_categories["points"]]
+            df_subcat = (
+                df[df.category.isin(categories)]
+                .groupby(df.sub_category)
+                .agg({"amount": "sum"})
+                .sort_values("amount", ascending=False)
+            )
+        elif selected_categories is None:
+            months = [point["x"] for point in selected_months["points"]]
+            df_subcat = (
+                df[df.date.dt.month.isin(months)]
+                .groupby(df.sub_category)
+                .agg({"amount": "sum"})
+                .sort_values("amount", ascending=False)
+            )
+        else:
+            months = [point["x"] for point in selected_months["points"]]
+            categories = [point["y"] for point in selected_categories["points"]]
+            df_subcat = (
+                df[df.category.isin(categories) & df.date.dt.month.isin(months)]
+                .groupby(df.sub_category)
+                .agg({"amount": "sum"})
+                .sort_values("amount", ascending=False)
+            )
+
+        return {
+            "data": [
+                go.Bar(x=df_subcat.amount * -1, y=df_subcat.index, orientation="h")
+            ]
+        }
+
+    @app.callback(
+        Output("transaction_table", "data"),
+        [
+            Input("expenses_chart", "selectedData"),
+            Input("categories_chart", "selectedData"),
+        ],
+    )
+    def displayed_categories_for_month(selected_months, selected_categories):
+        if selected_months is None and selected_categories is None:
+            df_selected = df
+        elif selected_months is None:
+            categories = [point["y"] for point in selected_categories["points"]]
+            df_selected = (
+                df[df.category.isin(categories)]
+                .groupby(df.sub_category)
+                .agg({"amount": "sum"})
+                .sort_values("amount", ascending=False)
+            )
+        elif selected_categories is None:
+            months = [point["x"] for point in selected_months["points"]]
+            df_selected = df[df.date.dt.month.isin(months)]
+        else:
+            months = [point["x"] for point in selected_months["points"]]
+            categories = [point["y"] for point in selected_categories["points"]]
+            df_selected = df[
+                df.category.isin(categories) & df.date.dt.month.isin(months)
+            ]
+
+        return df_selected.sort_values("added_date").to_dict("rows")
+
