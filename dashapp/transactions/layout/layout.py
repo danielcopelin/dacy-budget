@@ -115,7 +115,7 @@ def layout(app):
 
         conditional_dict = {
             category_column: {
-                "options": [{"label": i, "value": i} for i in categories.keys()]
+                "options": [{"label": i, "value": i} for i in sorted(categories.keys())]
             }
         }
 
@@ -125,12 +125,18 @@ def layout(app):
                     "column_id": sub_category_column,
                     "filter_query": f'{{{category_column}}} eq "{category}"',
                 },
-                "options": [{"label": i, "value": i} for i in categories[category]],
+                "options": [
+                    {"label": i, "value": i} for i in sorted(categories[category])
+                ],
             }
             for category in categories.keys()
         ]
 
         return conditional_dict, sub_conditional_list
+
+    conditional_dict, sub_conditional_list = gen_conditionals_categories(
+        "category", "sub_category"
+    )
 
     with app.server.app_context():
         transactions = db.session.query(Transaction)
@@ -138,13 +144,10 @@ def layout(app):
 
         accounts = Transaction.query.with_entities(Transaction.account).distinct()
 
-    conditional_dict, sub_conditional_list = gen_conditionals_categories(
-        "category", "sub_category"
-    )
-
     layout = html.Div(
         [
-            # html.Div(id="hidden_div", style={"display": "none"}),
+            dcc.Location(id="location"),
+            html.Div(id="current_location"),
             html.Details(
                 [
                     html.Summary("Filters"),

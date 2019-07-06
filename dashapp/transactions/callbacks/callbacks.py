@@ -5,7 +5,7 @@ from flask_login import current_user
 import pandas as pd
 from collections import OrderedDict
 from sqlalchemy.exc import IntegrityError
-import dashapp.layout
+import dashapp.transactions.layout
 
 
 def register_callbacks(app):
