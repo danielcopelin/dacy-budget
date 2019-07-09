@@ -57,7 +57,7 @@ def layout(app):
                                         margin={"t": 10, "r": 10},
                                         dragmode="select",
                                         hovermode="closest",
-                                        clickmode="event+select",
+                                        clickmode="select",
                                     ),
                                 },
                             )
@@ -81,7 +81,7 @@ def layout(app):
                                         margin={"t": 10, "r": 10},
                                         dragmode="select",
                                         hovermode="closest",
-                                        clickmode="event+select",
+                                        clickmode="select",
                                     ),
                                 },
                             )
@@ -111,6 +111,7 @@ def layout(app):
                                         margin={"t": 10, "r": 10},
                                         dragmode="select",
                                         hovermode="closest",
+                                        clickmode="select",
                                     ),
                                 },
                             )
