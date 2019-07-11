@@ -62,7 +62,7 @@ def layout(app):
                                 },
                             )
                         ],
-                        className="col-sm",
+                        className="col-sm border",
                     ),
                     html.Div(
                         [
@@ -86,7 +86,7 @@ def layout(app):
                                 },
                             )
                         ],
-                        className="col-sm",
+                        className="col-sm border",
                     ),
                 ],
                 className="row",
@@ -116,7 +116,7 @@ def layout(app):
                                 },
                             )
                         ],
-                        className="col-sm",
+                        className="col-sm border",
                     ),
                     html.Div(
                         [
@@ -151,7 +151,7 @@ def layout(app):
                                 page_size=10,
                             )
                         ],
-                        className="col-sm",
+                        className="col-sm border",
                     ),
                 ],
                 className="row",
