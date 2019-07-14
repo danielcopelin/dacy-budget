@@ -208,27 +208,37 @@ def layout(app):
                                 "id": "category",
                                 "name": "Category",
                                 "presentation": "dropdown",
+                                "min-width": "200px",
                             },
                             {
                                 "id": "sub_category",
                                 "name": "Sub-category",
                                 "presentation": "dropdown",
+                                "min-width": "200px",
                             },
                         ],
-                        style_cell={"padding": "5px"},
+                        # style_cell={"padding": "5px"},
                         style_header={"backgroundColor": "white", "fontWeight": "bold"},
                         editable=True,
                         filter_action="native",
                         sort_action="native",
-                        # sort_mode="multi",
+                        sort_mode="multi",
                         page_action="native",
                         page_current=0,
                         page_size=15,
                         dropdown=conditional_dict,
                         dropdown_conditional=sub_conditional_list,
+                        style_data={"whiteSpace": "normal"},
+                        css=[
+                            {
+                                "selector": ".dash-cell div.dash-cell-value",
+                                "rule": "display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;",
+                            }
+                        ],
                     )
                 ],
                 id="main",
+                style={"width": "95%"},
             ),
         ]
     )

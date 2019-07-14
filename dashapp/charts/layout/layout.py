@@ -111,6 +111,7 @@ def layout(app):
                                         margin={"t": 10, "r": 10},
                                         dragmode="select",
                                         hovermode="closest",
+                                        clickmode="event+select",
                                     ),
                                 },
                             )
@@ -148,6 +149,7 @@ def layout(app):
                                     "fontWeight": "bold",
                                 },
                                 page_size=10,
+                                sort_action="native",
                             )
                         ],
                         className="col-sm",
