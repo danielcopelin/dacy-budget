@@ -7,18 +7,8 @@
 {% endblock stylesheets %}
 
 {% block app_content %}
-<div class="right_col" role="main">
-  <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="embed-responsive">
-        <!-- <div style="width: 100%; min-height:700px;"> -->
-        <iframe class="embed-responsive-item" noresize='noresize' src={{ dash_url }} frameborder="0">
-        </iframe>
-        <!-- </div> -->
-        <div class="clearfix"></div>
-      </div>
-    </div>
-  </div>
+<div class="embed-responsive">
+    <iframe class="embed-responsive-item" src={{ dash_url }}></iframe>
 </div>
 {% endblock app_content %}
 
