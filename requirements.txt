@@ -43,7 +43,7 @@ Mako==1.0.12
 MarkupSafe==1.1.1
 more-itertools==7.0.0
 nbformat==4.4.0
-numpy==1.16.4
+numpy==1.22.0
 packaging==19.0
 pandas==0.24.2
 pandas-datareader==0.7.0
