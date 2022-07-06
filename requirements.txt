@@ -38,7 +38,7 @@ itsdangerous==1.1.0
 Jinja2==2.10.1
 jsonschema==3.0.1
 jupyter-core==4.5.0
-lxml==4.3.4
+lxml==4.9.1
 Mako==1.0.12
 MarkupSafe==1.1.1
 more-itertools==7.0.0
